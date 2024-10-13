@@ -26,6 +26,27 @@ func main() {
 	screen.SetStyle(style)
 
 	draw(screen)
+  for {
+    ev := screen.PollEvent()
+    switch ev := ev.(type) {
+    case *tcell.EventKey:
+      switch ev.Key() {
+      case tcell.KeyCtrlC:
+        return
+      case tcell.KeyUp :
+        player.Y--
+      case tcell.KeyDown:
+        player.Y++
+      case tcell.KeyLeft:
+        player.X--
+      case tcell.KeyRight:
+        player.X++
+      }
+      draw(screen)
+    case *tcell.EventResize:
+      screen.Sync()
+    }
+  }
 
 }
 
